@@ -1,0 +1,176 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan Carter Profile | Professional Network | Social Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background-color: #000;
+      color: #00ffff;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-container { flex: 1; width: 100%; }
+
+    /* Profile Section */
+    .profile-section { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 20px; }
+    .header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px; }
+    .header-title h1 { font-size: 24px; color: #00ffff; text-shadow: 0 0 8px #00ffff; }
+    .profile-avatar { width: 128px; height: 128px; border-radius: 50%; border: 3px solid #00ffff; box-shadow: 0 0 20px #00ffff; }
+    .profile-name { font-size: 26px; font-weight: 700; text-shadow: 0 0 8px #00ffff, 0 0 15px #ffffff; }
+    .profile-username, .profile-joined { font-size: 14px; text-shadow: 0 0 6px #00ffff; }
+
+    .stats-row { display: flex; gap: 16px; margin: 20px 0; }
+    .stat-card {
+      flex: 1; text-align: center; padding: 12px;
+      border: 1px solid #00ffff; border-radius: 10px;
+      background: rgba(0,255,255,0.05);
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.3), 0 0 12px rgba(0,255,255,0.6);
+      transition: all 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-4px) scale(1.05); box-shadow: inset 0 0 15px rgba(255,255,255,0.6), 0 0 20px rgba(0,255,255,1); }
+    .stat-number { font-size: 22px; font-weight: bold; }
+
+    /* Tabs */
+    .tabs-container { display: flex; border-bottom: 1px solid #00ffff; margin: 0 20px; }
+    .tab-item {
+      flex: 1; text-align: center; padding: 12px; cursor: pointer; font-weight: bold; text-shadow: 0 0 5px #00ffff;
+    }
+    .tab-item.active { border-bottom: 3px solid #00ffff; }
+
+    /* Sections */
+    .tab-section { display: none; padding: 20px; }
+    .tab-section.active { display: block; }
+
+    /* Posts */
+    .post-item {
+      display: flex; gap: 16px; margin-bottom: 20px; padding: 12px;
+      border-radius: 10px; background: rgba(0,255,255,0.05);
+      box-shadow: 0 0 10px rgba(0,255,255,0.5); transition: all 0.3s;
+    }
+    .post-item:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(0,255,255,0.9); }
+    .post-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #00ffff; }
+
+    /* Footer */
+    .bottom-nav { background: #000; border-top: 2px solid #00ffff; padding: 10px; box-shadow: 0 -4px 20px rgba(0,255,255,0.5); }
+    .nav-row { display: flex; justify-content: space-around; align-items: center; }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 10px; border-radius: 12px;
+      background: rgba(0,255,255,0.05);
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.2), 0 0 12px rgba(0,255,255,0.6);
+      transition: all 0.3s ease;
+    }
+    .nav-item:hover { transform: scale(1.2); box-shadow: inset 0 0 12px rgba(255,255,255,0.6), 0 0 20px rgba(0,255,255,1); }
+    .nav-icon { font-size: 20px; color: #00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #fff; }
+    .nav-text { font-size: 12px; margin-top: 4px; font-weight: 600; color: #00ffff; text-shadow: 0 0 6px #00ffff, 0 0 12px #ffffff; }
+  </style>
+</head>
+<body>
+  <main class="main-container">
+    <!-- Profile Section -->
+    <section class="profile-section">
+      <div class="header-row">
+        <div class="header-title"><h1>Profile</h1></div>
+        <i class="fa-solid fa-gear fa-2x nav-icon"></i>
+      </div>
+      <img src="https://via.placeholder.com/128" alt="Ethan Carter profile picture" class="profile-avatar" />
+      <h2 class="profile-name">Ethan Carter</h2>
+      <p class="profile-username">@ethan.carter</p>
+      <p class="profile-joined">Joined 2021</p>
+      <div class="stats-row">
+        <div class="stat-card"><span class="stat-number">12</span><br>Posts</div>
+        <div class="stat-card"><span class="stat-number">24</span><br>Connections</div>
+        <div class="stat-card"><span class="stat-number">100</span><br>Followers</div>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <section class="tabs-container">
+      <div class="tab-item active" data-tab="posts">Posts</div>
+      <div class="tab-item" data-tab="connections">Connections</div>
+      <div class="tab-item" data-tab="about">About</div>
+    </section>
+
+    <!-- Tab Sections -->
+    <section id="posts" class="tab-section active">
+      <div class="post-item">
+        <img src="https://via.placeholder.com/60" alt="avatar" class="post-avatar"/>
+        <div class="post-details">
+          <h3>Sustainable Investing</h3>
+          <p>2d ago</p>
+          <p>Investing in sustainable energy for long-term growth.</p>
+        </div>
+      </div>
+      <div class="post-item">
+        <img src="https://via.placeholder.com/60" alt="avatar" class="post-avatar"/>
+        <div class="post-details">
+          <h3>Crypto Insights</h3>
+          <p>1w ago</p>
+          <p>Exploring the potential of cryptocurrency in modern finance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="connections" class="tab-section">
+      <div class="post-item">
+        <img src="https://via.placeholder.com/60" alt="connection" class="post-avatar"/>
+        <div class="post-details">
+          <h3>Alice Johnson</h3>
+          <p>Connection since 2022</p>
+          <p>Finance Analyst · Interested in blockchain and ESG</p>
+        </div>
+      </div>
+      <div class="post-item">
+        <img src="https://via.placeholder.com/60" alt="connection" class="post-avatar"/>
+        <div class="post-details">
+          <h3>Michael Smith</h3>
+          <p>Connection since 2023</p>
+          <p>Investor · Passionate about clean energy startups</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="tab-section">
+      <div class="post-item">
+        <div class="post-details">
+          <h3>About Ethan Carter</h3>
+          <p>Ethan Carter is a finance professional exploring the intersection of sustainable investing and cryptocurrency. Passionate about building networks that focus on impactful investments.</p>
+          <p><strong>Specialties:</strong> Blockchain · ESG · Portfolio Management</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bottom-nav">
+      <nav class="nav-row">
+        <div class="nav-item"><i class="fa-solid fa-wallet nav-icon"></i><span class="nav-text">Expenses</span></div>
+        <div class="nav-item"><i class="fa-solid fa-user-secret nav-icon"></i><span class="nav-text">Anonymous</span></div>
+        <div class="nav-item"><i class="fa-solid fa-bullseye nav-icon"></i><span class="nav-text">Goals</span></div>
+        <div class="nav-item"><i class="fa-solid fa-handshake nav-icon"></i><span class="nav-text">Friends</span></div>
+        <div class="nav-item"><i class="fa-solid fa-user nav-icon"></i><span class="nav-text">Profile</span></div>
+      </nav>
+    </footer>
+  </main>
+
+  <script>
+    // Tab functionality
+    const tabs = document.querySelectorAll(".tab-item");
+    const sections = document.querySelectorAll(".tab-section");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        sections.forEach(s => s.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

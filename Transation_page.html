@@ -1,0 +1,333 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transactions Dashboard | Valora</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #0a0a0f, #000);
+      color: #00f5ff;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Main layout */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(20, 20, 40, 0.6);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+    }
+
+    .logo {
+      width: 120px;
+      height: auto;
+      filter: drop-shadow(0 0 6px #0ff);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-item {
+      font-size: 16px;
+      color: #0ff;
+      text-decoration: none;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .nav-item:hover {
+      color: #e69832;
+      text-shadow: 0 0 10px #e69832;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: rgba(0, 255, 255, 0.1);
+      box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    .icon-button:hover {
+      background: rgba(255, 0, 255, 0.2);
+      box-shadow: 0 0 10px #e69832, inset 0 0 6px #0ff;
+    }
+
+    .profile-image {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid #0ff;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    /* Content wrapper */
+    .content-wrapper {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-content {
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Page header */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 10px #0ff, 0 0 20px #e69832;
+    }
+
+    .new-transaction-btn {
+      padding: 10px 24px;
+      font-size: 14px;
+      color: #fff;
+      background: rgba(0, 255, 255, 0.15);
+      border: 1px solid #0ff;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: inset 0 0 8px #0ff, 0 0 10px rgba(0, 255, 255, 0.4);
+      transition: 0.3s;
+    }
+
+    .new-transaction-btn:hover {
+      background: rgba(255, 0, 255, 0.2);
+      border-color: #e69832;
+      box-shadow: inset 0 0 12px #e69832, 0 0 14px #e69832;
+    }
+
+    /* Search */
+    .search-container {
+      position: relative;
+      margin: 16px 0;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 48px;
+      background: rgba(20, 20, 40, 0.6);
+      border: 1px solid #0ff;
+      border-radius: 12px;
+      color: #0ff;
+      font-size: 16px;
+      box-shadow: inset 0 0 8px #0ff;
+    }
+
+    .search-input::placeholder {
+      color: #888;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      filter: drop-shadow(0 0 6px #0ff);
+    }
+
+    /* Filters */
+    .filters-container {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .filter-dropdown {
+      padding: 10px 16px;
+      background: rgba(20, 20, 40, 0.6);
+      border: 1px solid #0ff;
+      border-radius: 12px;
+      color: #0ff;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: inset 0 0 6px #0ff;
+      transition: 0.3s;
+    }
+
+    .filter-dropdown:hover {
+      border-color: #e69832;
+      box-shadow: inset 0 0 10px #e69832;
+    }
+
+    /* Transactions Table */
+    .transactions-table {
+      background: rgba(20, 20, 40, 0.7);
+      border: 1px solid #0ff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    .table-header {
+      display: flex;
+      background: rgba(0, 255, 255, 0.1);
+      border-bottom: 1px solid #0ff;
+    }
+
+    .table-header-cell {
+      flex: 1;
+      padding: 16px;
+      font-weight: 600;
+      color: #0ff;
+      text-shadow: 0 0 6px #0ff;
+    }
+
+    .table-row {
+      display: flex;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    .table-row:hover {
+      background: rgba(255, 0, 255, 0.15);
+      box-shadow: inset 0 0 12px #e69832;
+    }
+
+    .table-cell {
+      flex: 1;
+      padding: 14px;
+      color: #ddd;
+    }
+
+    .category-badge {
+      padding: 6px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      background: rgba(0, 255, 255, 0.2);
+      border: 1px solid #0ff;
+      color: #0ff;
+      box-shadow: inset 0 0 8px #0ff;
+    }
+
+    /* Animations */
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 6px #0ff, 0 0 12px #ff00ff; }
+      50% { text-shadow: 0 0 12px #e69832, 0 0 20px #0ff; }
+      100% { text-shadow: 0 0 6px #0ff, 0 0 12px #e69832; }
+    }
+
+    .page-title {
+      animation: glowPulse 3s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <header class="header">
+      <img src="" alt="Valora Logo" class="logo" /> <!-- leave blank for logo plugin -->
+      
+      <nav class="nav-menu">
+        <a href="#" class="nav-item">Dashboard</a>
+        <a href="#" class="nav-item">Transactions</a>
+        <a href="#" class="nav-item">Budgets</a>
+        <a href="#" class="nav-item">Goals</a>
+        <a href="#" class="nav-item">Reports</a>
+      </nav>
+      
+      <div class="header-actions">
+        <button class="icon-button"><img src="" alt="🔔" width="20" /></button>
+        <img src="" alt="User Profile" class="profile-image" />
+      </div>
+    </header>
+
+    <main class="content-wrapper">
+      <div class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">Transactions</h1>
+          <button class="new-transaction-btn">+ New Transaction</button>
+        </div>
+
+        <div class="search-container">
+          <img src="" alt="Search" class="search-icon" />
+          <input type="text" class="search-input" placeholder="Search transactions..." />
+        </div>
+
+        <div class="filters-container">
+          <select class="filter-dropdown">
+            <option>Date</option><option>Last 7 days</option><option>Last 30 days</option>
+          </select>
+          <select class="filter-dropdown">
+            <option>Category</option><option>Groceries</option><option>Dining</option>
+          </select>
+          <select class="filter-dropdown">
+            <option>Amount</option><option>Under $50</option><option>$50 - $200</option>
+          </select>
+        </div>
+
+        <div class="transactions-table">
+          <div class="table-header">
+            <div class="table-header-cell">Date</div>
+            <div class="table-header-cell">Description</div>
+            <div class="table-header-cell">Category</div>
+            <div class="table-header-cell">Account</div>
+            <div class="table-header-cell">Amount</div>
+          </div>
+          <div class="table-row">
+            <div class="table-cell">2023-09-20</div>
+            <div class="table-cell">Grocery shopping</div>
+            <div class="table-cell"><span class="category-badge">Groceries</span></div>
+            <div class="table-cell">Checking</div>
+            <div class="table-cell">-$75.50</div>
+          </div>
+          <div class="table-row">
+            <div class="table-cell">2023-09-19</div>
+            <div class="table-cell">Salary deposit</div>
+            <div class="table-cell"><span class="category-badge">Income</span></div>
+            <div class="table-cell">Savings</div>
+            <div class="table-cell">+$2500</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

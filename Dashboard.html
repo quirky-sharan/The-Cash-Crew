@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VALORA Financial Dashboard | Personal Finance Management</title>
+
+  <!-- Minecraft retro font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background-color: #0d0d0d;
+      color: #00ffff;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 32px;
+      background: #111;
+      border-bottom: 2px solid #00ffff;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      animation: slideDown 0.8s ease;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: 0 0 10px cyan, 0 0 20px white;
+      transition: transform 0.3s ease;
+    }
+    .logo-text:hover { transform: scale(1.1) rotate(-2deg); }
+
+    .nav-item {
+      font-size: 12px;
+      text-decoration: none;
+      color: #e69832;
+      text-shadow: 0 0 6px #e69832, 0 0 12px #fff;
+      margin: 0 14px;
+      transition: all 0.3s;
+    }
+    .nav-item:hover { color: #ffdd00; text-shadow: 0 0 8px #ffdd00, 0 0 15px white; }
+
+    /* Titles */
+    .page-title, .section-title {
+      text-shadow: 0 0 14px #00ffff, 0 0 26px #ffffff;
+      margin-bottom: 20px;
+      padding: 10px 0;
+    }
+    .page-title { 
+      font-size: 22px; 
+      margin-top: 30px; 
+      color: #ffdd00;
+      text-shadow: 0 0 12px #ffdd00, 0 0 25px #ffaa00;
+      animation: fadeIn 1s ease; 
+    }
+    .section-title { 
+      font-size: 14px; 
+      margin-top: 30px;
+      color: #e69832;
+      text-shadow: 0 0 10px #e69832, 0 0 20px #ff99ff;
+      animation: fadeIn 1.2s ease; 
+    }
+
+    /* Overview Cards */
+    .overview-cards { display: flex; flex-wrap: wrap; gap: 20px; }
+    .overview-card {
+      flex: 1;
+      background: #1a1a1a;
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: inset 0 0 12px #fff, 0 0 25px cyan;
+      transition: all 0.4s ease;
+      animation: floatUp 1.2s ease;
+    }
+    .overview-card:hover { transform: translateY(-10px) scale(1.06); box-shadow: inset 0 0 18px #fff, 0 0 35px #00ffff; }
+
+    .card-label { font-size: 12px; color: #aaa; }
+    .card-value { font-size: 16px; margin-top: 10px; color: #00ff99; text-shadow: 0 0 10px #00ff99; }
+
+    /* Tables */
+    .table-container {
+      margin-top: 24px;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      overflow-x: auto;
+      box-shadow: 0 0 18px cyan;
+      animation: fadeIn 1.4s ease;
+    }
+    .data-table { width: 100%; border-collapse: collapse; }
+    th, td {
+      padding: 18px;
+      text-align: left;
+      font-size: 12px;
+      border-bottom: 1px solid #333;
+    }
+    th { color: #e69832; }
+    td { color: #00ffff; }
+    tr:hover { background: rgba(0,255,255,0.1); }
+
+    .account-type-btn {
+      background: #111;
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: 'Press Start 2P', cursive;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .account-type-btn:hover {
+      background: #00ffff;
+      color: #111;
+      box-shadow: 0 0 12px #00ffff, inset 0 0 6px #fff;
+    }
+
+    /* Spending */
+    .spending-container {
+      background: #111;
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      padding: 28px;
+      margin-top: 28px;
+      animation: fadeIn 1.6s ease;
+    }
+    .spending-header { font-size: 14px; color: #aaa; margin-bottom: 10px; }
+    .spending-amount { font-size: 18px; color: #ffdd00; text-shadow: 0 0 10px #ffdd00; margin-bottom: 12px; }
+    .spending-change { color: #f94938; font-size: 12px; margin-bottom: 20px; }
+
+    .category-item { display: flex; align-items: center; margin-bottom: 14px; }
+    .category-label { font-size: 10px; color: #aaa; width: 120px; }
+    .category-bar {
+      flex: 1; height: 14px; background: #222;
+      border: 1px solid #00ffff;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .category-bar::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; height: 100%;
+      background: linear-gradient(90deg, #00ffff, #ffdd00, #e69832);
+      animation: barFill 2s forwards;
+    }
+    .category-bar.groceries::after { width: 75%; }
+    .category-bar.dining::after { width: 78%; }
+    .category-bar.shopping::after { width: 15%; }
+    .category-bar.transportation::after { width: 78%; }
+
+    /* Social feed */
+    .social-feed {
+      background: #1a1a1a;
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      box-shadow: 0 0 18px cyan;
+      animation: floatUp 1.8s ease;
+    }
+    .user-avatar { border: 2px solid #e69832; border-radius: 50%; }
+    .user-name { font-size: 12px; color: #ffdd00; margin-bottom: 8px; }
+    .user-message { font-size: 10px; color: #ccc; margin-bottom: 8px; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+    @keyframes floatUp { 0% { opacity: 0; transform: translateY(40px);} 100% { opacity: 1; transform: translateY(0);} }
+    @keyframes slideDown { from { transform: translateY(-50px); opacity: 0;} to { transform: translateY(0); opacity: 1;} }
+    @keyframes barFill { from { width: 0; } to { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main class="main-container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo-text">VALORA</h1>
+      <nav>
+        <a href="#dashboard" class="nav-item">Dashboard</a>
+        <a href="#transactions" class="nav-item">Transactions</a>
+        <a href="#budgets" class="nav-item">Budgets</a>
+        <a href="#goals" class="nav-item">Goals</a>
+        <a href="#investments" class="nav-item">Invest</a>
+      </nav>
+    </header>
+
+    <div class="content-wrapper" style="padding: 30px;">
+      <!-- Dashboard -->
+      <h1 class="page-title">Dashboard</h1>
+
+      <section>
+        <h2 class="section-title">Overview</h2>
+        <div class="overview-cards">
+          <div class="overview-card">
+            <div class="card-label">Net Worth</div>
+            <div class="card-value">$12,345.67</div>
+          </div>
+          <div class="overview-card">
+            <div class="card-label">Total Balance</div>
+            <div class="card-value">$8,765.43</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Accounts -->
+      <section>
+        <h2 class="section-title">Accounts</h2>
+        <div class="table-container">
+          <table class="data-table">
+            <thead><tr><th>Account</th><th>Balance</th><th>Type</th></tr></thead>
+            <tbody>
+              <tr><td>Checking</td><td>$5,432.10</td><td><button class="account-type-btn">Checking</button></td></tr>
+              <tr><td>Savings</td><td>$3,333.33</td><td><button class="account-type-btn">Savings</button></td></tr>
+              <tr><td>Credit Card</td><td>$0.00</td><td><button class="account-type-btn">Credit</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Transactions -->
+      <section>
+        <h2 class="section-title">Recent Transactions</h2>
+        <div class="table-container">
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Category</th></tr></thead>
+            <tbody>
+              <tr><td>2023-09-20</td><td>Grocery Store</td><td>-$75.50</td><td><button class="account-type-btn">Groceries</button></td></tr>
+              <tr><td>2023-09-19</td><td>Restaurant</td><td>-$45.00</td><td><button class="account-type-btn">Dining</button></td></tr>
+              <tr><td>2023-09-18</td><td>Paycheck</td><td>+$2,500.00</td><td><button class="account-type-btn">Income</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Spending -->
+      <section>
+        <h2 class="section-title">Spending by Category</h2>
+        <div class="spending-container">
+          <div class="spending-header">This Month</div>
+          <div class="spending-amount">$270.50</div>
+          <div class="spending-change">-10%</div>
+
+          <div class="category-item"><span class="category-label">Groceries</span><div class="category-bar groceries"></div></div>
+          <div class="category-item"><span class="category-label">Dining</span><div class="category-bar dining"></div></div>
+          <div class="category-item"><span class="category-label">Shopping</span><div class="category-bar shopping"></div></div>
+          <div class="category-item"><span class="category-label">Transport</span><div class="category-bar transportation"></div></div>
+        </div>
+      </section>
+
+      <!-- Social Feed -->
+      <section>
+        <h2 class="section-title">Community</h2>
+        <article class="social-feed">
+          <img src="https://via.placeholder.com/70" alt="Liam Harper profile" class="user-avatar" />
+          <div>
+            <h3 class="user-name">Liam Harper</h3>
+            <p class="user-message">How are you handling investments with the current market volatility?</p>
+            <span class="user-timestamp">3d ago</span>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
