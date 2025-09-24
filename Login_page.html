@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <!-- Google Font: Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: black;
+      font-family:'Times New Roman', cursive;
+      display:flex;
+      justify-content:center;
+      align-items: center;
+      height:100vh;
+      margin:0;
+    }
+    .login-container {
+      display:flex;
+      flex-direction:column;
+      align-items: center;
+      gap:50px;
+    }
+    .login-box{
+      background: rgba(0, 0, 0, 0.9);
+      padding:32px;
+      justify-content: center;
+      border:1px solid dimgray;
+      border-radius: 10px;
+      color:whitesmoke;
+      width:350px;
+      max-width:90%;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        inset 0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 25px cyan;
+      transition: all 0.4s ease;
+      transform:scale(1);
+    }
+    .login-box:hover {
+      transform:scale(1.05);
+      box-shadow:
+        inset 0 0 25px rgba(255, 255, 255, 0.4),
+        0 0 40px cyan;
+    }
+    h2 {
+      text-align: center;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid black;
+      border-radius: 5px;
+      font: inherit;
+      box-sizing: border-box;
+      background: white;
+      color: black;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, cyan, deepskyblue);
+      color:black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font: inherit;
+      margin-top: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,255,0.5);
+    }
+    button:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.8), 0 0 40px rgba(0,255,255,0.6);
+      background: linear-gradient(135deg, deepskyblue, cyan);
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+    .name {
+      text-align: center;
+      color: cyan;
+      font-size: 1.5rem;
+      line-height: 1.4;
+    }
+    .info {
+      margin: 0;
+      font-family: 'Press Start 2P', cursive; /* retro pixel font */
+      font-size: 28px; 
+      font-weight: bold;
+      color: whitesmoke;
+      letter-spacing: 3px; 
+      text-transform: uppercase;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: titleFadeIn 1.2s ease forwards;
+    }
+    .crew {
+      margin-top: 10px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 16px;
+      color: cyan;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: crewSlideUp 1.5s ease forwards;
+      animation-delay: 1s;
+    }
+    /* Animations */
+    @keyframes titleFadeIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+        text-shadow: 0 0 10px cyan, 0 0 20px cyan, 0 0 30px deepskyblue;
+      }
+    }
+    @keyframes crewSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        text-shadow: 0 0 5px cyan, 0 0 15px cyan;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <form class="login-box" method="POST" action="/login">
+      <h2>Login</h2>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Sign In</button>
+    </form>
+    <div class="name">
+      <h2 class="info"><strong>(Name of our project)</strong></h2>
+      <p class="crew">By <b>The Cash Crew</b></p>
+    </div>
+  </div>
+</body>
+</html>
