@@ -1,0 +1,350 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Savings Goals Dashboard | Valora</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #0a0a0f, #000);
+      color: #00ffff;
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-height: 100vh;
+      align-items: center;
+      gap: 40px;
+      padding-bottom: 50px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 16px 24px;
+      background: rgba(0,0,20,0.6);
+      border-bottom: 1px solid #00ffff;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    }
+
+    .logo {
+      width: 120px;
+      height: auto;
+      filter: drop-shadow(0 0 8px #00ffff);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-item {
+      font-size: 16px;
+      color: #00ffff;
+      text-decoration: none;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .nav-item:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background: rgba(0,255,255,0.1);
+      box-shadow: inset 0 0 8px #00ffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    .icon-button:hover {
+      background: rgba(0,255,255,0.3);
+      box-shadow: 0 0 10px #00ffff, inset 0 0 8px #00ffff;
+    }
+
+    .profile-image {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 12px #00ffff;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.1);
+    }
+
+    /* Content Section */
+    .content-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff;
+      animation: glowPulse 3s infinite;
+    }
+
+    .new-goal-btn {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      background: rgba(0,255,255,0.15);
+      border: 1px solid #00ffff;
+      border-radius: 12px;
+      padding: 10px 24px;
+      cursor: pointer;
+      box-shadow: inset 0 0 8px #00ffff, 0 0 10px rgba(0,255,255,0.3);
+      transition: all 0.3s ease;
+      align-self: flex-end;
+    }
+
+    .new-goal-btn:hover {
+      background: rgba(0,255,255,0.3);
+      box-shadow: inset 0 0 12px #00ffff, 0 0 16px #00ffff;
+      transform: translateY(-2px);
+    }
+
+    /* Goals List */
+    .goals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      width: 100%;
+    }
+
+    .goal-item {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      background: rgba(0,0,20,0.6);
+      border: 1px solid #00ffff;
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .goal-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px #00ffff, 0 0 30px rgba(0,255,255,0.6);
+    }
+
+    .goal-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .goal-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .goal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
+    .goal-description {
+      font-size: 14px;
+      color: #66ffff;
+    }
+
+    .view-btn {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      background: rgba(0,255,255,0.15);
+      border: 1px solid #00ffff;
+      border-radius: 12px;
+      padding: 8px 20px;
+      cursor: pointer;
+      box-shadow: inset 0 0 6px #00ffff, 0 0 8px rgba(0,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .view-btn:hover {
+      background: rgba(0,255,255,0.3);
+      box-shadow: inset 0 0 12px #00ffff, 0 0 16px #00ffff;
+      transform: translateY(-1px);
+    }
+
+    .goal-image {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-top: 16px;
+      border: 1px solid #00ffff;
+      box-shadow: 0 0 12px #00ffff;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .goal-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ffff, 0 0 25px rgba(0,255,255,0.6);
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff; }
+      50% { text-shadow: 0 0 16px #00ffff, 0 0 24px #00ffff; }
+      100% { text-shadow: 0 0 8px #00ffff, 0 0 16px #00ffff; }
+    }
+
+    @media (min-width: 640px) {
+      .goal-item {
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
+      }
+      .goal-content {
+        flex: 1;
+      }
+      .goal-image {
+        width: 320px;
+        height: 180px;
+        margin-top: 0;
+      }
+      .section-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .content-wrapper {
+        width: 70%;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <main class="main-container">
+    <header class="header">
+      <img src="" alt="Valora Logo" class="logo" />
+
+      <nav class="nav-menu" role="navigation">
+        <a href="#dashboard" class="nav-item">Dashboard</a>
+        <a href="#transactions" class="nav-item">Transactions</a>
+        <a href="#accounts" class="nav-item">Accounts</a>
+        <a href="#goals" class="nav-item">Goals</a>
+        <a href="#investments" class="nav-item">Investments</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-button"><img src="" alt="Notifications" width="20"/></button>
+        <img src="" alt="User Profile" class="profile-image" />
+      </div>
+    </header>
+
+    <section class="content-section">
+      <div class="content-wrapper">
+        <div class="section-header">
+          <h1 class="page-title">Savings Goals</h1>
+          <button class="new-goal-btn">+ New Goal</button>
+        </div>
+
+        <div class="goals-list">
+          <article class="goal-item">
+            <div class="goal-content">
+              <div class="goal-info">
+                <h2 class="goal-title">Vacation Fund</h2>
+                <p class="goal-description">Save for your dream vacation</p>
+              </div>
+              <button class="view-btn">View</button>
+            </div>
+            <img src="" alt="Vacation destination" class="goal-image" />
+          </article>
+
+          <article class="goal-item">
+            <div class="goal-content">
+              <div class="goal-info">
+                <h2 class="goal-title">Down Payment</h2>
+                <p class="goal-description">Save for your future home</p>
+              </div>
+              <button class="view-btn">View</button>
+            </div>
+            <img src="" alt="Future home" class="goal-image" />
+          </article>
+
+          <article class="goal-item">
+            <div class="goal-content">
+              <div class="goal-info">
+                <h2 class="goal-title">Emergency Fund</h2>
+                <p class="goal-description">Build a financial safety net</p>
+              </div>
+              <button class="view-btn">View</button>
+            </div>
+            <img src="" alt="Emergency fund" class="goal-image" />
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
