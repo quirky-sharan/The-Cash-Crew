@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Neon Search Page</title>
+  <!-- Google Font: Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Press Start 2P', cursive;
+      background-color: black;
+      color: cyan;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* ---------------- Top navigation bar ---------------- */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(15px);
+      box-shadow: inset 0 0 15px rgba(255,255,255,0.1), 0 0 15px cyan;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      border: 1px solid cyan;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.7);
+      color: cyan;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      box-shadow: 0 0 10px cyan, 0 0 20px cyan;
+      transform: scale(1.05) translateY(-2px);
+    }
+
+    .menu-btn { font-size: 16px; }
+
+    /* Profile button with image */
+    .profile-btn img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid cyan;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+    .profile-btn:hover img {
+      box-shadow: 0 0 10px cyan, 0 0 20px cyan;
+      transform: scale(1.1);
+    }
+
+    .search-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    .search-box {
+      width: 60%;
+      max-width: 500px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: 1px solid cyan;
+      background: rgba(0,0,0,0.7);
+      color: cyan;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px;
+      box-shadow: 0 0 5px cyan inset, 0 0 10px cyan;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    .search-box input:focus {
+      box-shadow: 0 0 10px cyan inset, 0 0 20px cyan;
+      transform: scale(1.02);
+    }
+
+    .right-buttons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    /* Bell notification dropdown */
+    .notification-box {
+      display: none;
+      position: absolute;
+      top: 45px;
+      right: 0;
+      width: 220px;
+      background: rgba(0,0,0,0.9);
+      border: 1px solid cyan;
+      border-radius: 10px;
+      box-shadow: 0 0 15px cyan;
+      padding: 10px;
+      z-index: 2000;
+    }
+    .notification-box p {
+      font-size: 10px;
+      color: cyan;
+      margin: 6px 0;
+    }
+
+    /* ---------------- Side Menu ---------------- */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -270px;
+      width: 250px;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      border-right: 2px solid cyan;
+      box-shadow: 0 0 15px cyan;
+      transition: left 0.3s ease;
+      z-index: 2000;
+      padding: 20px 10px;
+    }
+    .side-menu.active { left: 0; }
+    .side-menu .close-btn {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .side-menu .close-btn button {
+      background: none;
+      border: none;
+      color: cyan;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .side-menu button {
+      display: block;
+      width: 100%;
+      margin: 12px 0;
+      padding: 10px;
+      background: none;
+      border: 1px solid cyan;
+      border-radius: 6px;
+      color: cyan;
+      font-family: 'Press Start 2P', cursive;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .side-menu button:hover {
+      background: cyan;
+      color: black;
+      box-shadow: 0 0 10px cyan;
+    }
+
+    /* ---------------- Slider ---------------- */
+    .slider-container {
+      margin: 40px auto;
+      width: 80%;
+      max-width: 900px;
+      height: 400px;
+      border: 2px solid cyan;
+      border-radius: 20px;
+      box-shadow: 0 0 15px cyan, 0 0 30px cyan;
+      overflow: hidden;
+      position: relative;
+    }
+    .slides {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+    .slide {
+      flex: 1 0 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .slide-text {
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      color: gold;
+      font-size: 1.5rem;
+      text-shadow: 0 0 10px gold, 0 0 20px orange;
+    }
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid cyan;
+      color: cyan;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 100;
+    }
+    .slider-btn:hover {
+      background: cyan;
+      color: black;
+    }
+    .prev-btn { left: 15px; }
+    .next-btn { right: 15px; }
+
+    /* ---------------- Footer ---------------- */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      box-shadow: 0 -2px 15px cyan;
+      z-index: 999;
+    }
+    footer i {
+      font-size: 22px;
+      color: cyan;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    footer i:hover {
+      color: gold;
+      text-shadow: 0 0 10px gold, 0 0 20px orange;
+      transform: scale(1.2);
+    }
+
+    /* ---------------- Custom Cursor ---------------- */
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      font-size: 30px;
+      color: gold;
+      text-shadow: 0 0 10px gold, 0 0 20px orange;
+      transform: translate(-50%, -50%) rotate(-20deg);
+      z-index: 3000;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="custom-cursor">$</div>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+  <div class="close-btn"><button id="closeMenu"><i class="fas fa-times"></i></button></div>
+  <button>Dashboard</button>
+  <button>Expenses</button>
+  <button>Goals</button>
+  <button>Friends</button>
+  <button>Reports</button>
+  <button>Settings</button>
+</div>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <button class="btn menu-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
+  
+  <!-- Search with button -->
+  <div class="search-container">
+    <div class="search-box">
+      <input type="text" placeholder="Search something...">
+    </div>
+    <button class="btn"><i class="fas fa-search"></i></button>
+  </div>
+
+  <div class="right-buttons">
+    <button class="btn" id="bellBtn"><i class="fas fa-bell"></i></button>
+    <div class="notification-box" id="notificationBox">
+      <p>🔔 You received from Vedant!</p>
+      <p>🎯 Goal reached: Save $1000</p>
+      <p>👤 Rahul sent you a request</p>
+    </div>
+    <!-- New profile icon button -->
+    <button class="btn"><i class="fas fa-user"></i></button>
+    <!-- Existing profile image -->
+    <button class="btn profile-btn">
+      <img src="https://i.pravatar.cc/150?img=12" alt="Profile">
+    </button>
+    <button class="btn gate-symbol">⛩️</button>
+  </div>
+</div>
+
+<!-- Slider -->
+<div class="slider-container">
+  <div class="slides" id="slides">
+    <div class="slide" style="background-image: url('Slide_1.png');">
+      <div class="slide-text">Expense Tracking</div>
+    </div>
+    <div class="slide" style="background-image: url('Slide_2.png');">
+      <div class="slide-text">Community Post</div>
+    </div>
+    <div class="slide" style="background-image: url('Slide_3.png');">
+      <div class="slide-text">Goals</div>
+    </div>
+    <div class="slide" style="background-image: url('Slide_4.png');">
+      <div class="slide-text">Friend Recomendations</div>
+    </div>
+  </div>
+  <button class="slider-btn prev-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+  <button class="slider-btn next-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- Content -->
+<div class="content">
+  <p>Valora</p>
+  <p>Money. Connected.
+
+Valora is the world's first social network for finance. Share insights, borrow and lend with ease, and stay on top of every goal with smart reminders.
+
+Simple. Social. Secure.
+This is money—reimagined.</p>
+</div>
+
+<!-- Footer -->
+<footer>
+  <i class="fas fa-wallet"></i>
+  <i class="fas fa-user-secret"></i>
+  <i class="fas fa-bullseye"></i>
+  <i class="fas fa-handshake"></i>
+  <i class="fas fa-cogs"></i>
+</footer>
+
+<!-- Sound -->
+<audio id="money-sound" src="https://www.soundjay.com/misc/sounds/cash-register-01.mp3"></audio>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('custom-cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.top = e.clientY + 'px';
+    cursor.style.left = e.clientX + 'px';
+  });
+
+  // Click sound
+  const sound = document.getElementById('money-sound');
+  document.addEventListener('click', () => {
+    sound.currentTime = 0;
+    sound.play();
+  });
+
+  // Notification toggle
+  const bellBtn = document.getElementById('bellBtn');
+  const notifBox = document.getElementById('notificationBox');
+  bellBtn.addEventListener('click', () => {
+    notifBox.style.display = notifBox.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Side menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const closeMenu = document.getElementById('closeMenu');
+  const sideMenu = document.getElementById('sideMenu');
+  menuToggle.addEventListener('click', () => sideMenu.classList.add('active'));
+  closeMenu.addEventListener('click', () => sideMenu.classList.remove('active'));
+
+  // Slider
+  const slides = document.getElementById('slides');
+  const totalSlides = slides.children.length;
+  let current = 0;
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  function showSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    current = index;
+    slides.style.transform = `translateX(-${current * 100}%)`;
+  }
+  nextBtn.addEventListener('click', () => showSlide(current + 1));
+  prevBtn.addEventListener('click', () => showSlide(current - 1));
+</script>
+
+</body>
+</html>
